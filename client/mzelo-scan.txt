@@ -1,0 +1,32 @@
+﻿C:\Users\udrak\Downloads\mzelo-clone\client\src\components\Tour.jsx:4:   { el: null,                         title: "Welcome to Mzelo", desc: "Watch parties, chat, and shared browsing â€” together." },
+C:\Users\udrak\Downloads\mzelo-clone\client\src\components\Tour.jsx:53:         className="driver-popover mzelo-tour-popover"
+C:\Users\udrak\Downloads\mzelo-clone\client\src\components\Tour.jsx:77:           <button className="mzelo-tour-skip" onClick={onPrevOrDone(false)}>{i === 0 ? "Skip" : "Back"}</button>
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1: cd C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.cssbody {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:49: .mzelocanvas {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:53: .mzelocanvas,.mzelocanvasbg {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:61: .mzelocanvasbg {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:478: .mzeloselectedtab {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:905:     .mzelomagic {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:911:     .mzelomagic,.mzuserlist {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1046:     .mzeloselectedtab {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1056:     .mzeloselectedtab,.selectedspan {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1282: .mzelo-tour-popover.driver-popover {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1291: .mzelo-tour-popover .driver-popover-title {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1297: .mzelo-tour-popover .driver-popover-description {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1303: .mzelo-tour-popover .driver-popover-footer {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1312: .mzelo-tour-popover .driver-popover-progress-text {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1319: .mzelo-tour-popover .driver-popover-navigation-btns {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1327: .mzelo-tour-popover .driver-popover-footer button {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1338: .mzelo-tour-popover .driver-popover-done-btn,.mzelo-tour-popover .driver-popover-next-btn {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1343: .mzelo-tour-popover .driver-popover-done-btn:focus,.mzelo-tour-popover .driver-popover-done-btn:hover,.mzelo-tour-popover .driver-popover-next-btn:focus,.mzelo-tour-popover .driver-popover-next-btn:hover {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1348: .mzelo-tour-popover .driver-popover-prev-btn {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1353: .mzelo-tour-popover .driver-popover-prev-btn:focus,.mzelo-tour-popover .driver-popover-prev-btn:hover {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1358: .mzelo-tour-popover .driver-popover-close-btn {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1362: .mzelo-tour-popover .driver-popover-close-btn:focus,.mzelo-tour-popover .driver-popover-close-btn:hover {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1367: .mzelo-tour-popover .mzelo-tour-skip {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1378: .mzelo-tour-popover .mzelo-tour-skip:focus,.mzelo-tour-popover .mzelo-tour-skip:hover {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\app.css:1383: .mzelo-tour-popover .driver-popover-arrow-side-bottom,.mzelo-tour-popover .driver-popover-arrow-side-left,.mzelo-tour-popover .driver-popover-arrow-side-right,.mzelo-tour-popover .driver-popover-arrow-side-top {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\lobby.css:3474: .mzelo-coc-btn {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\lobby.css:3483: .mzelo-coc-btn:focus,.mzelo-coc-btn:hover {
+C:\Users\udrak\Downloads\mzelo-clone\client\src\css\lobby.css:3488: .mzelo-doc-btn {
+C:\Users\udrak\Downloads\mzelo-clone\client\package.json:2:   "name": "mzelo-client",

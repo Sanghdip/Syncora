@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  neko:
+    image: m1k1o/neko:firefox
+    container_name: mzelo-neko
+    restart: unless-stopped
+    shm_size: "2gb"
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - "8080:8080"
+      - "52000-52100:52000-52100/udp"
+    environment:
+      NEKO_SCREEN: "1920x1080@30"
+      NEKO_PASSWORD: "${NEKO_GUEST_PASSWORD}"
+      NEKO_PASSWORD_ADMIN: "${NEKO_ADMIN_PASSWORD}"
+      NEKO_EPR: "52000-52100"
+      NEKO_NAT1TO1: "${NEKO_PUBLIC_HOST}"
+      NEKO_ICELOOKUP: "1"
+      NEKO_SESSION_IMPLICIT_CONTROL: "false"
+      NEKO_SESSION_LOCKED: "false"
+      NEKO_CONTROL_PROTECTION: "true"
+      NEKO_AUTOPLAY: "true"
+    volumes:
+     - ./neko-data:/home/neko
+
+volumes:
+  neko-data:

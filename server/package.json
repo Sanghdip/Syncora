@@ -1,0 +1,33 @@
+{
+  "name": "syncora-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "connect-pg-simple": "^10.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.7.0",
+    "express-session": "^1.19.0",
+    "google-auth-library": "^11.1.0",
+    "helmet": "^8.3.0",
+    "nanoid": "^5.0.7",
+    "pg": "^8.23.0",
+    "socket.io": "^4.7.5",
+    "ws": "^8.21.3",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true,
+    "sqlite3@5.1.7": true
+  }
+}

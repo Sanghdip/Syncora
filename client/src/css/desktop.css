@@ -1,0 +1,587 @@
+.desktop {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  pointer-events: none;
+}
+.desktop > * { pointer-events: auto; }
+
+.dw {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: rgba(20, 22, 30, 0.94);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65),
+              0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  overflow: hidden;
+  color: #e6e7ea;
+  transition: box-shadow 0.15s;
+  will-change: transform, left, top, width, height;
+}
+.dw:focus-within,
+.dw.dw-max {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75),
+              0 0 0 1px rgba(88, 101, 242, 0.35);
+}
+.dw-max { border-radius: 0; }
+
+.dw-header {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 6px 0 12px;
+  background: linear-gradient(180deg,
+              rgba(255, 255, 255, 0.06),
+              rgba(255, 255, 255, 0.02));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+.dw-header:active { cursor: grabbing; }
+
+.dw-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6e7ea;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dw-controls { display: flex; gap: 2px; }
+
+.dw-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #b9bbbe;
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: background 0.12s, color 0.12s;
+}
+.dw-btn:hover { background: rgba(255, 255, 255, 0.10); color: #fff; }
+.dw-btn.dw-close:hover { background: #ed4245; color: #fff; }
+
+.dw-body {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.dw-resize {
+  position: absolute;
+  z-index: 5;
+  user-select: none;
+}
+.dw-resize-n  { top: 0; left: 8px; right: 8px; height: 6px; cursor: ns-resize; }
+.dw-resize-s  { bottom: 0; left: 8px; right: 8px; height: 6px; cursor: ns-resize; }
+.dw-resize-e  { right: 0; top: 8px; bottom: 8px; width: 6px; cursor: ew-resize; }
+.dw-resize-w  { left: 0; top: 8px; bottom: 8px; width: 6px; cursor: ew-resize; }
+.dw-resize-ne { top: 0; right: 0; width: 12px; height: 12px; cursor: nesw-resize; }
+.dw-resize-nw { top: 0; left: 0; width: 12px; height: 12px; cursor: nwse-resize; }
+.dw-resize-se { bottom: 0; right: 0; width: 12px; height: 12px; cursor: nwse-resize; }
+.dw-resize-sw { bottom: 0; left: 0; width: 12px; height: 12px; cursor: nesw-resize; }
+
+.dw-readonly {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55),
+              0 0 0 1px rgba(255, 200, 0, 0.12) inset;
+}
+.dw-readonly .dw-header { cursor: default; }
+.dw-readonly .dw-header:active { cursor: default; }
+.dw-readonly .dw-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: transparent;
+  color: #6a6d74;
+}
+.dw-readonly .dw-btn:disabled:hover {
+  background: transparent;
+  color: #6a6d74;
+}
+.dw-lock-inline {
+  margin-left: 8px;
+  font-size: 11px;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+.dw-resize-disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================================
+   GLOBAL POINTER CAPTURE OVERLAY
+   Mounted while dragging or resizing. Covers every iframe and
+   video on the page (YouTube, Screen Share, Virtual Browser)
+   so they cannot steal pointermove events.
+   ============================================================ */
+.dw-capture-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: transparent;
+  pointer-events: all;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+/* ============================================================
+   Content wrappers — must fill the window body
+   ============================================================ */
+
+/* YouTube */
+.yt-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: #000;
+}
+.yt-frame {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+.yt-iframe {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+.yt-iframe-el {
+  width: 100% !important;
+  height: 100% !important;
+  border: 0;
+  display: block;
+}
+.yt-footer {
+  padding: 6px 10px;
+  background: #202225;
+  color: #b9bbbe;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.dw-youtube {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.dw-yt-bar {
+  display: flex;
+  gap: 6px;
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+.dw-yt-input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 12px;
+  outline: none;
+  min-width: 0;
+}
+.dw-yt-input:focus { border-color: #5865f2; }
+.dw-yt-btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #5865f2;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dw-yt-btn:hover { background: #4752c4; }
+.dw-yt-stage {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  min-height: 0;
+  background: #000;
+  position: relative;
+}
+.dw-yt-stage > * { flex: 1; min-height: 0; }
+.dw-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Screen Share */
+.ss-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.ss-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+.ss-title {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e6e7ea;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ss-btn {
+  height: 28px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ss-btn.primary { background: #5865f2; color: #fff; }
+.ss-btn.primary:hover:not(:disabled) { background: #4752c4; }
+.ss-btn.danger { background: #ed4245; color: #fff; }
+.ss-btn.danger:hover { background: #d83c3f; }
+.ss-live { font-size: 12px; font-weight: 600; color: #57f287; }
+.ss-wait { font-size: 12px; color: #949ba4; }
+.ss-body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  background: #000;
+}
+.ss-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.ss-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Virtual Browser */
+.vb-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.vb-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  min-height: 0;
+}
+.vb-title {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e6e7ea;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vb-btn {
+  height: 28px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.12s, opacity 0.12s;
+  flex-shrink: 0;
+}
+.vb-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.vb-btn.primary { background: #5865f2; color: #fff; }
+.vb-btn.primary:hover:not(:disabled) { background: #4752c4; }
+.vb-btn.ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e6e7ea;
+  width: 32px;
+  padding: 0;
+}
+.vb-btn.ghost:hover { background: rgba(255, 255, 255, 0.12); }
+.vb-btn.danger {
+  background: #ed4245;
+  color: #fff;
+  width: 32px;
+  padding: 0;
+}
+.vb-btn.danger:hover { background: #d83c3f; }
+.vb-body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  background: #000;
+}
+.vb-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.vb-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.vb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.vb-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.vb-badge.admin {
+  background: rgba(87, 242, 135, 0.16);
+  color: #57f287;
+  border: 1px solid rgba(87, 242, 135, 0.35);
+}
+.vb-badge.admin .vb-dot {
+  background: #57f287;
+  box-shadow: 0 0 6px #57f287;
+}
+.vb-badge.viewer {
+  background: rgba(255, 255, 255, 0.06);
+  color: #b9bbbe;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.vb-badge.viewer .vb-dot { background: #b9bbbe; }
+.vb-hint {
+  font-size: 12px;
+  color: #949ba4;
+  flex-shrink: 0;
+}
+
+/* Taskbar (unchanged from earlier) */
+.desktop-taskbar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 999px;
+  z-index: 100;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  max-width: calc(100vw - 24px);
+  overflow-x: auto;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+.desktop-taskbar::-webkit-scrollbar { display: none; }
+.desktop-taskbar:active { cursor: grabbing; }
+.desktop-taskbar.floating { box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55); }
+.desktop-taskbar.compact { gap: 2px; padding: 4px 6px; }
+.desktop-taskbar.compact .tb-launch { width: 32px; height: 32px; }
+.desktop-taskbar.compact .tb-win {
+  padding: 0 8px;
+  font-size: 11px;
+  height: 24px;
+  max-width: 60px;
+}
+.desktop-taskbar.compact .tb-open { max-width: 220px; }
+.desktop-taskbar.compact .tb-grip { display: none; }
+.desktop-taskbar.readonly { cursor: default; }
+
+.tb-grip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 22px;
+  font-size: 12px;
+  letter-spacing: -2px;
+  color: rgba(0, 0, 0, 0.28);
+  cursor: grab;
+  flex-shrink: 0;
+  padding-left: 2px;
+}
+.tb-grip:hover { color: rgba(0, 0, 0, 0.5); }
+.desktop-taskbar:active .tb-grip { cursor: grabbing; }
+.desktop-taskbar button,
+.desktop-taskbar .tb-win { cursor: pointer; }
+
+.tb-launchers,
+.tb-right {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.tb-launch {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #333;
+  font-size: 15px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, color 0.12s;
+  position: relative;
+}
+.tb-launch:hover { background: rgba(0, 0, 0, 0.07); color: #111; }
+.tb-launch.on { background: #5865f2; color: #fff; }
+.tb-launch.locked { opacity: 0.55; cursor: not-allowed; }
+.tb-launch.locked:hover { background: transparent; }
+.tb-launch.locked .tb-lock {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  font-size: 10px;
+  line-height: 1;
+}
+.tb-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.12);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+.tb-open {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 340px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tb-open::-webkit-scrollbar { display: none; }
+.tb-empty {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  padding: 0 6px;
+  white-space: nowrap;
+}
+.tb-win {
+  height: 28px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.06);
+  color: #222;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.12s, color 0.12s;
+}
+.tb-win:hover { background: rgba(0, 0, 0, 0.12); }
+.tb-win.active { background: #333; color: #fff; }
+.tb-win.min {
+  background: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.55);
+}
+.tb-reset {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #5865f2;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.12s, color 0.12s;
+}
+.tb-reset:hover { background: rgba(88, 101, 242, 0.16); color: #4752c4; }
+.tb-reset:active { transform: scale(0.94); }
+
+.dw-capture-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  background: transparent;
+  pointer-events: all;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
